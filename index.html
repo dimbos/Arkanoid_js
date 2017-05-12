@@ -13,20 +13,19 @@
 
 <script src="graph.js"></script>
 
+<script src="player.js"></script>
+
 <script>
 
 init();
 
-var x = 15;
+
+
 var game = function (){
    fillAll("#ADD8E2");
-   drawRect(x, 460, 100, 10, "blue");
-	
-	if(isKeyDown("D"))
-		x++;
-		if(isKeyDown("A"))
-		x--;
-
+   player.move();
+   player.draw();
+   
 	};
 
 
