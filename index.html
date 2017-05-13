@@ -15,75 +15,34 @@
 
 <script src="player.js"></script>
 <script src="grid.js"></script>
+<script src="ball.js"></script>
 
 <script>
 
 init();
 
-var ball = {
-	speed: 1,
-	dx: 1,
-	dy: -1,
-	color: "blue",
-	x: 0,
-	y: 0,
-	radius: 5,
+var map = {
+	color: "#C75252",
+	width: 40,
+	height: 20,
+	offset: 5,
 
-	draw: function(){
-		drawCircle(this.x, this.y, this.radius, this.color);
-	},
+	tiles: [
+	[1, 1, 0, 1, 1, 1],
+	[1, 0, 1, 1, 1, 0],
+	[0, 1, 1, 1, 1, 1],
+	[1, 0, 0, 0, 1, 0],
+	[1, 0, 0, 1, 0, 0],
+	[1, 0, 0, 0, 1, 0],
+	]
 
-	init: function(x, y, radius, color){
-		this.x = x;
-		this.y = y;
-		this.radius = radius;
-		this.color = color;
-	},
-
-	move: function(){
-		this.x += this.speed * this.dx;
-		this.y += this.speed * this.dy;
-	},
-
-	collision: function(){
-		for(var i in grid.nodes){
-			var enemy = grid.nodes[i];
-			if(isCollision(this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2, enemy.x, enemy.y, enemy.width, enemy.height)){
-				//столкновение
-				this.dy *= -1;
-				grid.destroy(i);
-			}
-		}
-
-		if(isCollision(this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2, player.x, player.y, player.width, player.height)){
-		//столкновение
-		this.dy *= -1;
-	}
-		if(this.x + this.radius >= width ){
-			this.dx =-1;
-		}
-
-		if(this.x - this.radius <= 0 ){
-			this.dx = 1;
-		}
-	
-},
 };
 
 
-var _Enemy = function(x, y, w, h, color){
-	this.x = x;
-	this.y = y;
-	this.width = w;
-	this.height = h;
-	this.color = color;
-};
+grid.create(map);
 
-_Enemy.prototype.draw = function(){
-	drawRect(this.x, this.y, this.width, this.height, this.color);
-}
-
-grid.generate(5, 60, 30, "red");
+//grid.generate(5, 60, 30, "red");  //для генерации без карты
+player.init(width/2, 200, "blue");
 ball.init(player.x + Math.ceil(player.width / 2), player.y - 5, 5, "green");
 
 var game = function (){

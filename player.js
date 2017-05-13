@@ -23,4 +23,10 @@ var player = {
 			this.x += this.speed;
 		}
 	},
+
+	init: function(x, w, color){
+		this.x = x;
+		this.width = w;
+		this.color = color;
+	}
 };

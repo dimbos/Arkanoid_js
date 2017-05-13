@@ -39,4 +39,31 @@ draw: function(){
 destroy: function(id){
 	this.nodes.splice(id, 1);
 },
+
+create: function(map){
+	var dOffsetx = (width - (map.tiles[0].length * (map.width + map.offset))) /2;
+	for(var t1 in map.tiles){
+		for(var t2 in map.tiles[t1]){
+			var tile = map.tiles[t1][t2];
+			var dx = dOffsetx + t2 * (map.width + map.offset);
+			var dy = map.offset + t1 * (map.height + map.offset);
+			if(tile == 1){
+				this.add(dx, dy, map.width, map.height, map.color);
+			}
+		}
+	}
+},
+
+};
+
+var _Enemy = function(x, y, w, h, color){
+	this.x = x;
+	this.y = y;
+	this.width = w;
+	this.height = h;
+	this.color = color;
+};
+
+_Enemy.prototype.draw = function(){
+	drawRect(this.x, this.y, this.width, this.height, this.color);
 };
