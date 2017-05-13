@@ -14,52 +14,62 @@
 <script src="graph.js"></script>
 
 <script src="player.js"></script>
+<script src="grid.js"></script>
 
 <script>
 
 init();
 
-var grid = {
-	nodes: [],
-	
-add: function(x, y, w, h, c){
-	var tmp = new _Enemy(x, y, w, h, c);
-	this.nodes.push(tmp);
-},
+var ball = {
+	speed: 1,
+	dx: 1,
+	dy: -1,
+	color: "blue",
+	x: 0,
+	y: 0,
+	radius: 5,
 
-generate: function(count, w, h, color){
-	var dw = 5; //расстояние между прямоугольниками
-	var dx = dw;
-	var dy = dw;
-	var dCountx = Math.ceil(width / (w + dw)) - 1;  //расчет кол-ва прямоугольников на игровом поле
-	//var dCounty = Math.ceil(count / dCountx); // расчет объекто по оси y
-	var dallw = Math.ceil((width - (w + dw) * dCountx) / 2); //расчет игрового поля, для центрирования сетки
-	dy = dallw;
-	for(var i = 0; i < count; i++){
-		for(var j = 0; j < dCountx; j++)
-		{
-			if(j == 0){
-				dx += Math.ceil((dallw - dw));
+	draw: function(){
+		drawCircle(this.x, this.y, this.radius, this.color);
+	},
+
+	init: function(x, y, radius, color){
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.color = color;
+	},
+
+	move: function(){
+		this.x += this.speed * this.dx;
+		this.y += this.speed * this.dy;
+	},
+
+	collision: function(){
+		for(var i in grid.nodes){
+			var enemy = grid.nodes[i];
+			if(isCollision(this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2, enemy.x, enemy.y, enemy.width, enemy.height)){
+				//столкновение
+				this.dy *= -1;
+				grid.destroy(i);
 			}
-			this.add(dx, dy, w, h, color);
-			dx += w + dw; 
 		}
-		dy+=h + dw;
-		dx = dw;
 
+		if(isCollision(this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2, player.x, player.y, player.width, player.height)){
+		//столкновение
+		this.dy *= -1;
 	}
-},
+		if(this.x + this.radius >= width ){
+			this.dx =-1;
+		}
 
-draw: function(){
-	for(en in this.nodes){
-		this.nodes[en].draw();
-	}
-},
-
-destroy: function(id){
-
+		if(this.x - this.radius <= 0 ){
+			this.dx = 1;
+		}
+	
 },
 };
+
 
 var _Enemy = function(x, y, w, h, color){
 	this.x = x;
@@ -74,13 +84,17 @@ _Enemy.prototype.draw = function(){
 }
 
 grid.generate(5, 60, 30, "red");
+ball.init(player.x + Math.ceil(player.width / 2), player.y - 5, 5, "green");
 
 var game = function (){
-   fillAll("#ADD8E2");
+   fillAll("#ADD8E6");
 
 
    grid.draw();
 
+   ball.collision();
+   ball.move();
+   ball.draw();
  
    
    player.draw();

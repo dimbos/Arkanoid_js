@@ -6,7 +6,7 @@ var player = {
 	width: 100,
 	height: 20,
 	color: "yellow",
-	speed: 1,
+	speed: 2,
 
 	draw: function (){
 		drawRect(this.x, this.y, this.width, this.height, this.color);
