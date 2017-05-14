@@ -8,6 +8,13 @@ var ball = {
 	y: 0,
 	radius: 5,
 
+	clear: function(){
+		this.speedx = 1;
+		this.speedy = 1;
+		this.dx = 1;
+		this.dy = -1;
+	},
+
 	draw: function(){
 		drawCircle(this.x, this.y, this.radius, this.color);
 	},
@@ -66,6 +73,14 @@ var ball = {
 
 			if(player.hp < 1){
 				alert("Вы проиграли. Вы набрали: " + player.score + "очков");
+				player.hp = 3;
+				grid.clear();
+				ball.clear();
+				document.getElementById("score").innerHTML = 0;
+				document.getElementById("hp").innerHTML = 3;
+				player.score = 0;
+				grid.create(map);
+
 			}
 		}
 	

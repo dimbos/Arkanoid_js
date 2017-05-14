@@ -65,8 +65,18 @@ var game = function (){
    
 	};
 
+var menu = function(){
+	fillAll("#ADD8E6");
+	grid.draw();
+	ball.draw();
+	player.draw();
 
-startGame(game);
+	if(isAnyKeyDown()){
+		setGame(game);
+	}
+};
+
+startGame(menu);
 
 </script>
 	

@@ -54,6 +54,10 @@ create: function(map){
 	}
 },
 
+clear: function(){
+	this.nodes = [];
+},
+
 };
 
 var _Enemy = function(x, y, w, h, color){
