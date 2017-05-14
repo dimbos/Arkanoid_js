@@ -2,7 +2,7 @@ var _renderer = (function(){
 	return window.requestAnamationFrame 	||
 	window.webkitRequestAnimationFrame    ||
 	window.mozRequestAnimationFrame				||
-	window.oRequestAnimationFFrame				||
+	window.oRequestAnimationFrame 				||
 	window.msRequestAnimationFrame     		||
 
 	function (callback){

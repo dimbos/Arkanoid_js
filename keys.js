@@ -24,7 +24,6 @@ var isKeyDown = function (keyName) {
 
 window.onkeydown = function (e){
 		setKey(e.keyCode);
-		console.log(e.keyCode);
 	}
 
 window.onkeyup = function(e){
